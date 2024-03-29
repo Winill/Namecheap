@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 
 
 test.beforeEach(async ({page, pageManager}) => {
-    await page.goto(process.env.URL)
+    await page.goto('/')
     await expect(page).toHaveURL(process.env.URL)
     await pageManager.onMainPage().clickLogIn()
 })

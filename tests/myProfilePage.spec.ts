@@ -4,8 +4,8 @@ import {test} from '../test-fixtures'
 let profileDataFromPreStep;
 
 test.beforeEach(async ({page, pageManager}) => {
-    await page.goto(process.env.URL)
-    await expect(page).toHaveURL(process.env.URL)
+    await page.goto('/')
+    await expect(page).toHaveURL('/')
     await pageManager.onMainPage().clickLogIn()
     await pageManager.onAuthPage().loginWithCredentials(process.env.EMAIL, process.env.PASS)
     await pageManager.onMainPage().openUserDropDownMenu()
