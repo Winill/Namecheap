@@ -1,11 +1,12 @@
 import {expect} from '@playwright/test';
 import {test} from '../test-fixtures'
 import { faker } from '@faker-js/faker';
+import { ErrorMessages } from '../utils/errorMessages';
 
 
 test.beforeEach(async ({page, pageManager}) => {
     await page.goto('/')
-    await expect(page).toHaveURL(process.env.URL)
+    await expect(page).toHaveURL('/')
     await pageManager.onMainPage().clickLogIn()
 })
 
@@ -21,15 +22,15 @@ test('user not registred test', async ({pageManager}) => {
     const randomPass = faker.string.alphanumeric(6)
     await pageManager.onAuthPage().loginWithCredentials(randomEmail, randomPass)
 
-    await expect(await pageManager.onAuthPage().getNotificationMessage()).toHaveText(`Uh oh! Email or password is incorrect`)
+    await expect(await pageManager.onAuthPage().getNotificationMessage()).toHaveText(ErrorMessages.userNotRegistered)
 })
 
 test('Invalid email', async ({pageManager}) => {
     await pageManager.onAuthPage().fillEmailInput(`test@@test.com`)
 
-    expect(await pageManager.onAuthPage().getErrorWithText(`Uh oh! This isn’t an email`)).toBeTruthy()
+    expect(await pageManager.onAuthPage().getErrorWithText(ErrorMessages.invalidEmail)).toBeTruthy()
 })
 
-// test.afterAll(async ({page}) => {
-//     await page.close()
-// })
+test.afterEach(async ({page}) => {
+    await page.close()
+})
