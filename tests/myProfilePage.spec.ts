@@ -1,30 +1,28 @@
-import {test, expect} from '@playwright/test';
-import { PageManager } from '../page-objects/pageManager';
+import {expect} from '@playwright/test';
+import {test} from '../test-fixtures'
 
 let profileDataFromPreStep;
 
-test.beforeEach(async ({page}) => {
+test.beforeEach(async ({page, pageManager}) => {
     await page.goto(process.env.URL)
     await expect(page).toHaveURL(process.env.URL)
-    const pm = new PageManager(page)
-    await pm.onMainPage().clickLogIn()
-    await pm.onAuthPage().loginWithCredentials(process.env.EMAIL, process.env.PASS)
-    await pm.onMainPage().openUserDropDownMenu()
-    await pm.onMainPage().openProfilePage()
-    profileDataFromPreStep = await pm.onProfilePage().constructProfileData();
+    await pageManager.onMainPage().clickLogIn()
+    await pageManager.onAuthPage().loginWithCredentials(process.env.EMAIL, process.env.PASS)
+    await pageManager.onMainPage().openUserDropDownMenu()
+    await pageManager.onMainPage().openProfilePage()
+    profileDataFromPreStep = await pageManager.onProfilePage().constructProfileData();
 })
 
-test('client area', async ({page}) => {
-    const pm = new PageManager(page)
-    await pm.onMainPage().openUserDropDownMenu()
-    await pm.onMainPage().clickLogOut()
+test('client area', async ({pageManager}) => {
+    await pageManager.onMainPage().openUserDropDownMenu()
+    await pageManager.onMainPage().clickLogOut()
 
-    await pm.onAuthPage().loginWithCredentials(process.env.EMAIL, process.env.PASS)
+    await pageManager.onAuthPage().loginWithCredentials(process.env.EMAIL, process.env.PASS)
    
-    await pm.onMainPage().openUserDropDownMenu();
-    await pm.onMainPage().openProfilePage()
+    await pageManager.onMainPage().openUserDropDownMenu();
+    await pageManager.onMainPage().openProfilePage()
 
-    const newProfileData = await pm.onProfilePage().constructProfileData();
+    const newProfileData = await pageManager.onProfilePage().constructProfileData();
     expect(profileDataFromPreStep).toEqual(newProfileData)
 })
 
