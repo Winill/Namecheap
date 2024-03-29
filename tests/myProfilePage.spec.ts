@@ -26,3 +26,7 @@ test('client area', async ({pageManager}) => {
     expect(profileDataFromPreStep).toEqual(newProfileData)
 })
 
+test.afterEach(async ({page}) => {
+    await page.close()
+})
+
