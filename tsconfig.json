@@ -1,0 +1,4 @@
+//For removing TS error tupes using dotenv
+{
+    "compileOnSave": true
+}

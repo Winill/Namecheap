@@ -1,0 +1,17 @@
+{
+  "name": "spaceship-automational-technical-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.30",
+    "dotenv": "^16.4.5",
+    "lodash": "^4.17.21"
+  }
+}
